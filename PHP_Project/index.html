@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Employee Management System</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: "Poppins", -apple-system, BlinkMacSystemFont, "Segoe UI",
+          Roboto, sans-serif;
+      }
+
+      body {
+        height: 100vh;
+        width: 100%;
+        margin: 0;
+        padding: 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        overflow: hidden;
+        position: relative;
+        background-color: #e6f7ff;
+      }
+
+      .bg-image {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-image: url("/api/placeholder/1920/1080");
+        background-size: cover;
+        background-position: center;
+        filter: brightness(0.9) saturate(0.8);
+        animation: zoomEffect 20s infinite alternate ease-in-out;
+        z-index: 1;
+        opacity: 0.3;
+      }
+
+      @keyframes zoomEffect {
+        0% {
+          transform: scale(1);
+        }
+        100% {
+          transform: scale(1.1);
+        }
+      }
+
+      .overlay {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(
+          45deg,
+          rgba(80, 165, 220, 0.3) 0%,
+          rgba(100, 190, 255, 0.2) 100%
+        );
+        z-index: 2;
+      }
+
+      .content {
+        position: relative;
+        z-index: 10;
+        text-align: center;
+        max-width: 90%;
+        animation: fadeIn 1.5s ease-out;
+        background-color: rgba(255, 255, 255, 0.85);
+        padding: 50px;
+        border-radius: 20px;
+        box-shadow: 0 15px 30px rgba(0, 85, 150, 0.1);
+        border: 1px solid rgba(255, 255, 255, 0.8);
+      }
+
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+          transform: translateY(20px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      .logo {
+        margin-bottom: 20px;
+        color: #0078d4;
+        font-size: 36px;
+        font-weight: 800;
+        letter-spacing: 2px;
+      }
+
+      .title {
+        color: #005a9e;
+        font-size: 42px;
+        font-weight: 700;
+        margin-bottom: 15px;
+        letter-spacing: 1px;
+      }
+
+      .tagline {
+        color: #1a6ca8;
+        font-size: 20px;
+        margin-bottom: 50px;
+        font-weight: 300;
+      }
+
+      .btn-container {
+        position: relative;
+        display: inline-block;
+      }
+
+      .pulse {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 130%;
+        height: 130%;
+        border-radius: 50px;
+        background: rgba(0, 120, 212, 0.2);
+        animation: pulse 2s infinite;
+        z-index: -1;
+      }
+
+      @keyframes pulse {
+        0% {
+          transform: translate(-50%, -50%) scale(0.9);
+          opacity: 0.7;
+        }
+        50% {
+          opacity: 0.3;
+        }
+        100% {
+          transform: translate(-50%, -50%) scale(1.2);
+          opacity: 0;
+        }
+      }
+
+      .cta-button {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        padding: 18px 40px;
+        background: #0078d4;
+        color: #fff;
+        font-size: 18px;
+        font-weight: 600;
+        border-radius: 50px;
+        text-decoration: none;
+        box-shadow: 0 10px 20px rgba(0, 120, 212, 0.3);
+        transition: all 0.3s ease;
+        position: relative;
+        overflow: hidden;
+        border: none;
+        cursor: pointer;
+        min-width: 220px;
+      }
+
+      .cta-button:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 15px 30px rgba(0, 120, 212, 0.4);
+        background: #0086f0;
+      }
+
+      .cta-button span {
+        position: relative;
+        z-index: 1;
+        display: flex;
+        align-items: center;
+      }
+
+      .cta-button i {
+        margin-left: 12px;
+        font-size: 16px;
+        transition: transform 0.3s ease;
+      }
+
+      .cta-button:hover i {
+        transform: translateX(5px);
+      }
+
+      .footer {
+        position: absolute;
+        bottom: 20px;
+        left: 0;
+        width: 100%;
+        text-align: center;
+        color: #0078d4;
+        font-size: 14px;
+        z-index: 10;
+      }
+
+      .wave {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        z-index: 5;
+        opacity: 0.5;
+      }
+
+      .wave-1 {
+        animation: wave 8s linear infinite;
+      }
+
+      .wave-2 {
+        animation: wave 10s linear infinite;
+        opacity: 0.3;
+      }
+
+      @keyframes wave {
+        0% {
+          transform: translateX(0);
+        }
+        50% {
+          transform: translateX(-50%);
+        }
+        100% {
+          transform: translateX(0);
+        }
+      }
+
+      @media (max-width: 768px) {
+        .content {
+          padding: 30px;
+        }
+
+        .logo {
+          font-size: 24px;
+          margin-bottom: 15px;
+        }
+
+        .title {
+          font-size: 32px;
+          margin-bottom: 10px;
+        }
+
+        .tagline {
+          font-size: 16px;
+          margin-bottom: 40px;
+        }
+
+        .cta-button {
+          padding: 16px 32px;
+          font-size: 16px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="bg-image"></div>
+    <div class="overlay"></div>
+
+    <svg
+      class="wave wave-1"
+      xmlns="http://www.w3.org/2000/svg"
+      viewBox="0 0 1440 320"
+    >
+      <path
+        fill="#85c1e9"
+        fill-opacity="1"
+        d="M0,288L48,272C96,256,192,224,288,213.3C384,203,480,213,576,229.3C672,245,768,267,864,261.3C960,256,1056,224,1152,224C1248,224,1344,256,1392,272L1440,288L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z"
+      ></path>
+    </svg>
+    <svg
+      class="wave wave-2"
+      xmlns="http://www.w3.org/2000/svg"
+      viewBox="0 0 1440 320"
+    >
+      <path
+        fill="#3498db"
+        fill-opacity="1"
+        d="M0,128L48,149.3C96,171,192,213,288,229.3C384,245,480,235,576,213.3C672,192,768,160,864,149.3C960,139,1056,149,1152,165.3C1248,181,1344,203,1392,213.3L1440,224L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z"
+      ></path>
+    </svg>
+
+    <div class="content">
+      <div class="logo">EMS</div>
+      <h1 class="title">Employee Management System</h1>
+      <p class="tagline">
+          Streamline your workforce management with our powerful solution
+      </p>
+  
+      <div class="btn-container">
+        <div class="pulse"></div>
+        <a href="./login.php" class="cta-button me-3">
+            <span>
+                Sign In
+                <i class="fas fa-arrow-right"></i>
+            </span>
+        </a>
+        <a href="./signup.php" class="cta-button">
+            <span>
+                Register
+                <i class="fas fa-user-plus"></i>
+            </span>
+        </a>
+    </div>
+  </div>
+    </div>
+
+    <div class="footer">
+      © 2025 Employee Management System. All rights reserved.
+    </div>
+
+    <script>
+      document.addEventListener("DOMContentLoaded", () => {
+        // Create subtle parallax effect on mouse move
+        const content = document.querySelector(".content");
+        const bgImage = document.querySelector(".bg-image");
+
+        document.addEventListener("mousemove", (e) => {
+          const x = e.clientX / window.innerWidth;
+          const y = e.clientY / window.innerHeight;
+
+          content.style.transform = `translate(${x * -10}px, ${y * -10}px)`;
+          bgImage.style.transform = `translate(${x * 10}px, ${
+            y * 10
+          }px) scale(1.05)`;
+        });
+
+        // For mobile/touch devices
+        document.addEventListener(
+          "touchmove",
+          (e) => {
+            e.preventDefault();
+            const touch = e.touches[0];
+            const x = touch.clientX / window.innerWidth;
+            const y = touch.clientY / window.innerHeight;
+
+            content.style.transform = `translate(${x * -5}px, ${y * -5}px)`;
+            bgImage.style.transform = `translate(${x * 5}px, ${
+              y * 5
+            }px) scale(1.05)`;
+          },
+          { passive: false }
+        );
+      });
+    </script>
+  </body>
+</html>
